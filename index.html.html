@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ishq Express - Live Music Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff006e;
+            --secondary: #00f5ff;
+            --accent: #9d4edd;
+            --dark: #0a0e27;
+            --darker: #050812;
+            --light: #e0aaff;
+            --flower1: #ff69b4;
+            --flower2: #ff1493;
+            --flower3: #ffc0cb;
+            --flower4: #ffe4e1;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 0, 110, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(0, 245, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+            animation: bgShift 8s ease-in-out infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(5deg); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 14, 39, 0.9);
+            z-index: 1000;
+            padding: 20px 40px;
+            border-bottom: 2px solid rgba(255, 105, 180, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            font-size: 14px;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--flower1), var(--flower2));
+            transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px 60px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.7), rgba(5, 8, 18, 0.8));
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.25) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: flowerPulse 6s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.15) 0%, transparent 70%);
+            bottom: 100px;
+            right: 100px;
+            animation: flowerPulse 7s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+            z-index: 1;
+        }
+
+        @keyframes flowerPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.5; }
+            50% { transform: scale(1.15) rotate(2deg); opacity: 0.8; }
+        }
+
+        .hero-content {
+            z-index: 2;
+            animation: slideInUpSmooth 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideInUpSmooth {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 8vw, 72px);
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--flower1), var(--flower2), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glowFlower 3.5s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+            text-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
+            letter-spacing: 2px;
+        }
+
+        @keyframes glowFlower {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 35px rgba(0, 245, 255, 0.6));
+            }
+        }
+
+        .tagline {
+            font-size: clamp(18px, 3vw, 28px);
+            color: var(--flower3);
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            animation: slideInUpSmooth 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideInUpSmooth 1.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: 2px solid transparent;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--flower1), var(--flower2));
+            color: white;
+            box-shadow: 0 0 25px rgba(255, 105, 180, 0.5);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 45px rgba(255, 105, 180, 0.9);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--flower3);
+            color: var(--flower3);
+            box-shadow: 0 0 20px rgba(255, 192, 203, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: var(--flower3);
+            color: var(--dark);
+            box-shadow: 0 0 45px rgba(255, 192, 203, 0.8);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: flowerBounce 2.2s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+        }
+
+        @keyframes flowerBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0) rotate(0deg); }
+            50% { transform: translateX(-50%) translateY(15px) rotate(2deg); }
+        }
+
+        /* Sections */
+        section {
+            position: relative;
+            z-index: 2;
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(32px, 5vw, 48px);
+            margin-bottom: 50px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--flower3), var(--flower1));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        /* About Section */
+        .about-content {
+            background: rgba(255, 192, 203, 0.08);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 105, 180, 0.2);
+            border-radius: 25px;
+            padding: 60px;
+            animation: fadeInUpSmooth 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 12px 40px rgba(255, 105, 180, 0.1);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .about-content:hover {
+            border-color: rgba(255, 105, 180, 0.4);
+            box-shadow: 0 16px 50px rgba(255, 105, 180, 0.2);
+            transform: translateY(-5px);
+        }
+
+        @keyframes fadeInUpSmooth {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .about-content p {
+            font-size: 18px;
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        /* Members Section */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 35px;
+            margin-top: 50px;
+        }
+
+        .member-card {
+            background: rgba(255, 192, 203, 0.08);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 105, 180, 0.2);
+            border-radius: 25px;
+            padding: 50px 30px;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: fadeInUpSmooth 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 105, 180, 0.15), transparent);
+            transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 1;
+        }
+
+        .member-card:hover {
+            border-color: var(--flower1);
+            box-shadow: 0 15px 45px rgba(255, 105, 180, 0.3);
+            transform: translateY(-12px) scale(1.02);
+        }
+
+        .member-card:hover::before {
+            left: 100%;
+        }
+
+        .member-avatar {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, var(--flower1), var(--flower2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .member-card:hover .member-avatar {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 45px rgba(255, 105, 180, 0.8);
+        }
+
+        .member-name {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .member-role {
+            color: var(--flower3);
+            font-size: 14px;
+            margin-bottom: 18px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .member-socials {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 105, 180, 0.15);
+            border: 2px solid var(--flower3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--flower3);
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-size: 16px;
+        }
+
+        .social-link:hover {
+            background: var(--flower3);
+            color: var(--dark);
+            transform: scale(1.25) rotate(10deg);
+            box-shadow: 0 0 20px rgba(255, 192, 203, 0.7);
+        }
+
+        /* Music Section */
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+            margin-top: 50px;
+        }
+
+        .song-card {
+            background: rgba(255, 192, 203, 0.08);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 105, 180, 0.2);
+            border-radius: 25px;
+            padding: 45px;
+            text-align: center;
+            animation: fadeInUpSmooth 0.8s ease;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .song-card:hover {
+            border-color: var(--flower1);
+            box-shadow: 0 15px 45px rgba(255, 105, 180, 0.3);
+            transform: translateY(-12px);
+        }
+
+        .song-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--flower3);
+            transition: all 0.3s ease;
+        }
+
+        .music-player {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .player-btn {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--flower1), var(--flower2));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .player-btn:hover {
+            background: linear-gradient(135deg, var(--flower2), var(--flower1));
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.8);
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 192, 203, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--flower1), var(--flower2));
+            width: 0%;
+            border-radius: 3px;
+            transition: width 0.1s ease;
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 25px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+            animation: fadeInUpSmooth 0.8s ease;
+            display: block;
+            text-decoration: none;
+            border: 2px solid rgba(255, 105, 180, 0.3);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .gallery-item:hover {
+            border-color: var(--flower1);
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: brightness(0.85) saturate(1.1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.15) rotate(3deg);
+            filter: brightness(1) saturate(1.2);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 105, 180, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid transparent;
+            border-radius: 25px;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+            border-color: var(--flower3);
+            box-shadow: inset 0 0 30px rgba(255, 192, 203, 0.3);
+        }
+
+        .gallery-icon {
+            font-size: 50px;
+            color: var(--flower3);
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(5deg); }
+        }
+
+        /* Contact Section */
+        .contact-content {
+            background: rgba(255, 192, 203, 0.08);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 105, 180, 0.2);
+            border-radius: 25px;
+            padding: 70px;
+            text-align: center;
+            animation: fadeInUpSmooth 1s ease;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .contact-content:hover {
+            border-color: rgba(255, 105, 180, 0.4);
+            box-shadow: 0 16px 50px rgba(255, 105, 180, 0.2);
+        }
+
+        .contact-item {
+            margin: 40px 0;
+            animation: fadeInUpSmooth 0.8s ease;
+            transition: all 0.4s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            font-size: 40px;
+            color: var(--flower1);
+            margin-bottom: 18px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: scale(1.2) rotate(10deg);
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.6);
+        }
+
+        .contact-label {
+            color: var(--flower3);
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 1.5px;
+        }
+
+        .contact-info {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.95);
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .contact-info:hover {
+            color: var(--flower3);
+            text-shadow: 0 0 15px rgba(255, 192, 203, 0.6);
+            transform: scale(1.05);
+        }
+
+        .social-links-contact {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 35px;
+        }
+
+        .social-link-large {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 105, 180, 0.15);
+            border: 2px solid var(--flower3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--flower3);
+            text-decoration: none;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-size: 24px;
+        }
+
+        .social-link-large:hover {
+            background: var(--flower3);
+            color: var(--dark);
+            transform: scale(1.3) rotate(15deg);
+            box-shadow: 0 0 30px rgba(255, 192, 203, 0.8);
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.6);
+            border-top: 2px solid rgba(255, 105, 180, 0.3);
+            padding: 50px 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        footer p {
+            margin: 12px 0;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            .about-content,
+            .contact-content {
+                padding: 40px 25px;
+            }
+
+            .members-grid,
+            .music-grid,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero::after {
+                right: 20px;
+                width: 300px;
+                height: 300px;
+            }
+
+            .member-card {
+                padding: 40px 20px;
+            }
+
+            .contact-content {
+                padding: 50px 25px;
+            }
+
+            section {
+                padding: 60px 15px;
+            }
+
+            .hero {
+                padding: 80px 15px 50px;
+            }
+
+            .song-card {
+                padding: 35px;
+            }
+
+            .player-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .social-links-contact {
+                gap: 18px;
+            }
+
+            .social-link-large {
+                width: 55px;
+                height: 55px;
+                font-size: 22px;
+            }
+
+            .gallery-grid {
+                gap: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            * {
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            nav {
+                padding: 12px 15px;
+            }
+
+            nav a {
+                font-size: 12px;
+            }
+
+            nav ul {
+                gap: 10px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+                margin-bottom: 8px;
+            }
+
+            .tagline {
+                font-size: 15px;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                padding: 12px 30px;
+                font-size: 14px;
+                border-radius: 40px;
+            }
+
+            .cta-buttons {
+                gap: 12px;
+            }
+
+            section {
+                padding: 40px 12px;
+            }
+
+            section h2 {
+                font-size: 26px;
+                margin-bottom: 30px;
+            }
+
+            .about-content {
+                padding: 30px 20px;
+                border-radius: 20px;
+            }
+
+            .about-content p {
+                font-size: 16px;
+                line-height: 1.6;
+                margin-bottom: 18px;
+            }
+
+            .member-card {
+                padding: 25px 15px;
+                border-radius: 20px;
+            }
+
+            .member-avatar {
+                width: 90px;
+                height: 90px;
+                font-size: 35px;
+                margin-bottom: 18px;
+            }
+
+            .member-name {
+                font-size: 18px;
+            }
+
+            .member-role {
+                font-size: 12px;
+                margin-bottom: 12px;
+            }
+
+            .social-link {
+                width: 38px;
+                height: 38px;
+                font-size: 14px;
+            }
+
+            .song-card {
+                padding: 25px;
+                border-radius: 20px;
+            }
+
+            .song-title {
+                font-size: 22px;
+                margin-bottom: 18px;
+            }
+
+            .music-player {
+                border-radius: 15px;
+                padding: 15px;
+            }
+
+            .player-controls {
+                gap: 12px;
+                margin-bottom: 12px;
+            }
+
+            .player-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 15px;
+            }
+
+            .progress-bar {
+                height: 4px;
+                margin-bottom: 10px;
+            }
+
+            .time-display {
+                font-size: 11px;
+            }
+
+            .gallery-item {
+                border-radius: 18px;
+                border: 2px solid rgba(255, 105, 180, 0.3);
+            }
+
+            .gallery-icon {
+                font-size: 40px;
+            }
+
+            .contact-content {
+                padding: 35px 20px;
+                border-radius: 20px;
+            }
+
+            .contact-item {
+                margin: 25px 0;
+            }
+
+            .contact-icon {
+                font-size: 32px;
+                margin-bottom: 12px;
+            }
+
+            .contact-label {
+                font-size: 12px;
+                margin-bottom: 8px;
+            }
+
+            .contact-info {
+                font-size: 16px;
+            }
+
+            .social-links-contact {
+                gap: 12px;
+                margin-top: 20px;
+            }
+
+            .social-link-large {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                border: 2px solid var(--flower3);
+            }
+
+            footer {
+                padding: 30px 15px;
+            }
+
+            footer p {
+                font-size: 13px;
+                margin: 8px 0;
+            }
+
+            .hero::before {
+                width: 400px;
+                height: 400px;
+            }
+
+            .hero::after {
+                width: 250px;
+                height: 250px;
+                bottom: 50px;
+                right: 10px;
+            }
+
+            .scroll-indicator {
+                bottom: 15px;
+            }
+
+            .scroll-indicator i {
+                font-size: 18px !important;
+            }
+        }
+
+        /* Touch-friendly adjustments */
+        @media (hover: none) and (pointer: coarse) {
+            .member-card,
+            .song-card,
+            .gallery-item,
+            .btn,
+            .social-link,
+            .social-link-large,
+            .contact-info {
+                transition: all 0.2s ease;
+            }
+
+            .member-card:active {
+                transform: scale(0.98);
+            }
+
+            .btn:active {
+                transform: scale(0.95);
+            }
+
+            .gallery-item:active {
+                transform: scale(0.98);
+            }
+        }
+
+        /* Prevent zoom on input focus */
+        input,
+        select,
+        textarea {
+            font-size: 16px !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home">🏠 Home</a></li>
+            <li><a href="#about">💫 About</a></li>
+            <li><a href="#members">🎭 Members</a></li>
+            <li><a href="#music">🎵 Music</a></li>
+            <li><a href="#gallery">🌹 Gallery</a></li>
+            <li><a href="#contact">📞 Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>✨ The Ishq Express ✨</h1>
+            <p class="tagline">🌹 Feel the Music of Love 🌹</p>
+            <div class="cta-buttons">
+                <a href="https://open.spotify.com/artist/4AFhmNUfgbsi7DuXGSuCA8?si=ZTQnI70sSNatkUAjFqVveA" target="_blank" class="btn btn-primary">🎧 Explore on Spotify</a>
+                <a href="#members" class="btn btn-secondary">👥 Meet the Band</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down" style="color: var(--flower3); font-size: 22px;"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>🌸 About Us</h2>
+        <div class="about-content">
+            <p>🎵 <strong>The Ishq Express</strong> is a dynamic music collective that explores the depths of human emotion through soulful melodies and captivating live performances.</p>
+            <p>We blend multiple genres—from classical to contemporary—creating a unique musical experience that resonates with every listener's heart. Our mission is to connect people through the universal language of music and bring communities together in celebration of love, passion, and artistic expression.</p>
+            <p>With energetic stage presence and authentic songwriting, we deliver unforgettable performances that leave audiences spellbound and wanting more. 🎶</p>
+        </div>
+    </section>
+
+    <!-- Members Section -->
+    <section id="members">
+        <h2>🌺 Meet the Band</h2>
+        <div class="members-grid">
+            <!-- Member 1 -->
+            <div class="member-card">
+                <div class="member-avatar">
+                    <i class="fas fa-microphone"></i>
+                </div>
+                <div class="member-name">Faaz Ali Khan</div>
+                <div class="member-role">Lead Vocalist</div>
+                <p style="color: rgba(255, 255, 255, 0.8); font-size: 14px; margin: 18px 0;">Lead the charge with soulful vocals and captivating stage presence.</p>
+                <div class="member-socials">
+                    <a href="https://instagram.com/faazsingsstuffs" target="_blank" class="social-link" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Member 2 -->
+            <div class="member-card">
+                <div class="member-avatar">
+                    <i class="fas fa-guitar"></i>
+                </div>
+                <div class="member-name">Aditya Badhani</div>
+                <div class="member-role">Lead Guitar & Backing Vocals</div>
+                <p style="color: rgba(255, 255, 255, 0.8); font-size: 14px; margin: 18px 0;">Master of melodies with electrifying guitar riffs and harmonies.</p>
+                <div class="member-socials">
+                    <a href="https://instagram.com/aditya.badhani" target="_blank" class="social-link" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Member 3 -->
+            <div class="member-card">
+                <div class="member-avatar">
+                    <i class="fas fa-guitar"></i>
+                </div>
+                <div class="member-name">Shahpuri</div>
+                <div class="member-role">Rhythm Guitar</div>
+                <p style="color: rgba(255, 255, 255, 0.8); font-size: 14px; margin: 18px 0;">The backbone of our sound with intricate rhythmic patterns.</p>
+                <div class="member-socials">
+                    <a href="https://instagram.com/shahpuri__" target="_blank" class="social-link" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Member 4 -->
+            <div class="member-card">
+                <div class="member-avatar">
+                    <i class="fas fa-drum"></i>
+                </div>
+                <div class="member-name">Tanishq Kewlani</div>
+                <div class="member-role">Drummer</div>
+                <p style="color: rgba(255, 255, 255, 0.8); font-size: 14px; margin: 18px 0;">Keeps the beat alive with powerful and synchronized drumming.</p>
+                <div class="member-socials">
+                    <a href="https://instagram.com/tanishq_kewlani" target="_blank" class="social-link" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Music Section -->
+    <section id="music">
+        <h2>🎶 Our Music</h2>
+        <div class="music-grid">
+            <!-- Song 1 -->
+            <div class="song-card">
+                <i class="fas fa-music" style="font-size: 50px; color: var(--flower1); margin-bottom: 25px;"></i>
+                <div class="song-title">Teri Yaad Mein</div>
+                <div class="music-player">
+                    <div class="player-controls">
+                        <button class="player-btn" title="Previous"><i class="fas fa-step-backward"></i></button>
+                        <button class="player-btn play-btn" title="Play/Pause"><i class="fas fa-play"></i></button>
+                        <button class="player-btn" title="Next"><i class="fas fa-step-forward"></i></button>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="time-display">
+                        <span>0:00</span>
+                        <span>3:45</span>
+                    </div>
+                </div>
+                <p style="color: rgba(255, 255, 255, 0.8); font-size: 14px;">A soulful journey through memories and longing.</p>
+            </div>
+
+            <!-- Song 2 -->
+            <div class="song-card">
+                <i class="fas fa-music" style="font-size: 50px; color: var(--flower2); margin-bottom: 25px;"></i>
+                <div class="song-title">Jab Tu Yahan</div>
+                <div class="music-player">
+                    <div class="player-controls">
+                        <button class="player-btn" title="Previous"><i class="fas fa-step-backward"></i></button>
+                        <button class="player-btn play-btn" title="Play/Pause"><i class="fas fa-play"></i></button>
+                        <button class="player-btn" title="Next"><i class="fas fa-step-forward"></i></button>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="time-display">
+                        <span>0:00</span>
+                        <span>4:12</span>
+                    </div>
+                </div>
+                <p style="color: rgba(255, 255, 255, 0.8); font-size: 14px;">An energetic anthem celebrating presence and connection.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <h2>🌹 Live Performances</h2>
+        <div class="gallery-grid">
+            <a href="https://instagram.com/theishqexpress" target="_blank" class="gallery-item">
+                <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                    <defs>
+                        <linearGradient id="flowerGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff69b4;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ff1493;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="400" height="400" fill="url(#flowerGrad1)"/>
+                    <circle cx="200" cy="200" r="80" fill="#ffc0cb" opacity="0.8"/>
+                    <circle cx="200" cy="120" r="30" fill="#ff69b4"/>
+                    <circle cx="280" cy="160" r="30" fill="#ff69b4"/>
+                    <circle cx="280" cy="240" r="30" fill="#ff69b4"/>
+                    <circle cx="200" cy="280" r="30" fill="#ff69b4"/>
+                    <circle cx="120" cy="240" r="30" fill="#ff69b4"/>
+                    <circle cx="120" cy="160" r="30" fill="#ff69b4"/>
+                    <circle cx="200" cy="200" r="20" fill="#ffe4e1"/>
+                </svg>
+                <div class="gallery-overlay">
+                    <i class="gallery-icon fab fa-instagram"></i>
+                </div>
+            </a>
+
+            <a href="https://instagram.com/theishqexpress" target="_blank" class="gallery-item">
+                <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                    <defs>
+                        <linearGradient id="flowerGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ffe4e1;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ffc0cb;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="400" height="400" fill="url(#flowerGrad2)"/>
+                    <circle cx="200" cy="200" r="70" fill="#ff69b4" opacity="0.7"/>
+                    <path d="M 200 130 Q 220 150 200 170 Q 180 150 200 130" fill="#ff1493"/>
+                    <path d="M 270 200 Q 250 220 230 200 Q 250 180 270 200" fill="#ff1493"/>
+                    <path d="M 200 270 Q 180 250 200 230 Q 220 250 200 270" fill="#ff1493"/>
+                    <path d="M 130 200 Q 150 180 170 200 Q 150 220 130 200" fill="#ff1493"/>
+                    <circle cx="200" cy="200" r="25" fill="#fff0f5"/>
+                </svg>
+                <div class="gallery-overlay">
+                    <i class="gallery-icon fab fa-instagram"></i>
+                </div>
+            </a>
+
+            <a href="https://instagram.com/theishqexpress" target="_blank" class="gallery-item">
+                <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                    <defs>
+                        <linearGradient id="flowerGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff1493;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ff69b4;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="400" height="400" fill="url(#flowerGrad3)"/>
+                    <g transform="translate(200,200)">
+                        <circle cy="-60" r="35" fill="#ffc0cb"/>
+                        <circle cx="52" cy="-30" r="35" fill="#ffc0cb"/>
+                        <circle cx="52" cy="30" r="35" fill="#ffc0cb"/>
+                        <circle cy="60" r="35" fill="#ffc0cb"/>
+                        <circle cx="-52" cy="30" r="35" fill="#ffc0cb"/>
+                        <circle cx="-52" cy="-30" r="35" fill="#ffc0cb"/>
+                        <circle r="30" fill="#ffe4e1"/>
+                    </g>
+                </svg>
+                <div class="gallery-overlay">
+                    <i class="gallery-icon fab fa-instagram"></i>
+                </div>
+            </a>
+
+            <a href="https://instagram.com/theishqexpress" target="_blank" class="gallery-item">
+                <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                    <defs>
+                        <linearGradient id="flowerGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ffc0cb;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ffe4e1;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="400" height="400" fill="url(#flowerGrad4)"/>
+                    <ellipse cx="200" cy="200" rx="80" ry="100" fill="#ff69b4" opacity="0.8"/>
+                    <ellipse cx="200" cy="200" rx="50" ry="120" fill="#ff1493" opacity="0.6" transform="rotate(45 200 200)"/>
+                    <ellipse cx="200" cy="200" rx="50" ry="120" fill="#ff1493" opacity="0.6" transform="rotate(-45 200 200)"/>
+                    <circle cx="200" cy="200" r="40" fill="#fff0f5"/>
+                </svg>
+                <div class="gallery-overlay">
+                    <i class="gallery-icon fab fa-instagram"></i>
+                </div>
+            </a>
+
+            <a href="https://instagram.com/theishqexpress" target="_blank" class="gallery-item">
+                <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                    <defs>
+                        <linearGradient id="flowerGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ffe4e1;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ff69b4;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="400" height="400" fill="url(#flowerGrad5)"/>
+                    <g transform="translate(200,200)">
+                        <path d="M 0,-70 Q 20,-50 15,-30 Q 0,-50 0,-70" fill="#ff1493"/>
+                        <path d="M 60,-35 Q 55,-15 40,-5 Q 50,-30 60,-35" fill="#ff1493"/>
+                        <path d="M 60,35 Q 55,15 40,5 Q 50,30 60,35" fill="#ff1493"/>
+                        <path d="M 0,70 Q 20,50 15,30 Q 0,50 0,70" fill="#ff1493"/>
+                        <path d="M -60,35 Q -55,15 -40,5 Q -50,30 -60,35" fill="#ff1493"/>
+                        <path d="M -60,-35 Q -55,-15 -40,-5 Q -50,-30 -60,-35" fill="#ff1493"/>
+                        <circle r="35" fill="#ffc0cb"/>
+                    </g>
+                </svg>
+                <div class="gallery-overlay">
+                    <i class="gallery-icon fab fa-instagram"></i>
+                </div>
+            </a>
+
+            <a href="https://instagram.com/theishqexpress" target="_blank" class="gallery-item">
+                <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                    <defs>
+                        <linearGradient id="flowerGrad6" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff69b4;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ffe4e1;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="400" height="400" fill="url(#flowerGrad6)"/>
+                    <circle cx="200" cy="150" r="40" fill="#ff1493"/>
+                    <circle cx="280" cy="200" r="40" fill="#ff1493"/>
+                    <circle cx="250" cy="290" r="40" fill="#ff1493"/>
+                    <circle cx="150" cy="290" r="40" fill="#ff1493"/>
+                    <circle cx="120" cy="200" r="40" fill="#ff1493"/>
+                    <circle cx="200" cy="200" r="45" fill="#ffc0cb"/>
+                    <circle cx="200" cy="200" r="25" fill="#fff0f5"/>
+                </svg>
+                <div class="gallery-overlay">
+                    <i class="gallery-icon fab fa-instagram"></i>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>💌 Get In Touch</h2>
+        <div class="contact-content">
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="contact-label">PHONE</div>
+                <a href="tel:6388950374" class="contact-info">6388950374</a>
+                <br>
+                <a href="tel:9118242880" class="contact-info">9118242880</a>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="contact-label">EMAIL</div>
+                <a href="mailto:contact@theishqexpress.com" class="contact-info">contact@theishqexpress.com</a>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="contact-label">FOLLOW US</div>
+                <div class="social-links-contact">
+                    <a href="https://instagram.com/theishqexpress" target="_blank" class="social-link-large" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://facebook.com/theishqexpress" target="_blank" class="social-link-large" title="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://youtube.com/theishqexpress" target="_blank" class="social-link-large" title="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 The Ishq Express. All rights reserved.</p>
+        <p>Designed with <span style="color: var(--flower1);">🌹</span> and crafted with passion.</p>
+    </footer>
+
+    <script>
+        // Smooth scroll animation for navigation links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // Music player animation
+        document.querySelectorAll('.play-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                const isPlaying = icon.classList.contains('fa-pause');
+                
+                if (isPlaying) {
+                    icon.classList.remove('fa-pause');
+                    icon.classList.add('fa-play');
+                    this.style.animation = 'none';
+                } else {
+                    icon.classList.remove('fa-play');
+                    icon.classList.add('fa-pause');
+                    this.style.animation = 'pulse 0.6s ease-in-out infinite';
+                }
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = entry.target.dataset.animation || 'fadeInUpSmooth 0.8s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.member-card, .song-card, .gallery-item').forEach(el => {
+            el.dataset.animation = 'fadeInUpSmooth 0.8s ease forwards';
+            observer.observe(el);
+        });
+
+        // Add hover effect to buttons
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px) scale(1.05)';
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Animate progress bars on play
+        document.querySelectorAll('.play-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const progressFill = this.closest('.music-player').querySelector('.progress-fill');
+                const icon = this.querySelector('i');
+                
+                if (icon.classList.contains('fa-pause')) {
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        if (progress >= 100 || !icon.classList.contains('fa-pause')) {
+                            progress = 0;
+                            clearInterval(interval);
+                        } else {
+                            progress += Math.random() * 2;
+                            progressFill.style.width = progress + '%';
+                        }
+                    }, 500);
+                }
+            });
+        });
+
+        // Scroll indicator animation
+        window.addEventListener('scroll', () => {
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            if (window.scrollY > 100) {
+                scrollIndicator.style.opacity = '0';
+                scrollIndicator.style.pointerEvents = 'none';
+            } else {
+                scrollIndicator.style.opacity = '1';
+                scrollIndicator.style.pointerEvents = 'auto';
+            }
+        });
+
+        // Add parallax effect on hero section
+        window.addEventListener('scroll', () => {
+            const heroContent = document.querySelector('.hero-content');
+            const scrollPosition = window.scrollY;
+            heroContent.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+        });
+    </script>
+</body>
+</html>
